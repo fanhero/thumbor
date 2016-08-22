@@ -38,7 +38,7 @@ class ImageUploadHandler(ImageApiHandler):
             filename = self.request.headers.get('Slug')
 
         # Check if the image uploaded is valid
-        if self.validate(body):
+        if self.validate(body, self.request.headers):
 
             # Use the default filename for the uploaded images
             if not filename:
@@ -54,7 +54,7 @@ class ImageUploadHandler(ImageApiHandler):
 
             # Build image id based on a random uuid (32 characters)
             image_id = str(uuid.uuid4().hex)
-            self.write_file(image_id, body)
+            self.write_file(image_id, body, bucket)
             self.set_status(201)
             self.set_header('Location', self.location(image_id, filename))
 
