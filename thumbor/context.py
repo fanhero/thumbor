@@ -229,6 +229,9 @@ class ContextImporter:
         if importer.upload_photo_storage:
             self.upload_photo_storage = importer.upload_photo_storage(context)
 
+        if importer.variable_storage:
+            self.variable_storage = importer.variable_storage(context)
+
         self.loader = importer.loader
         self.detectors = importer.detectors
         self.filters = importer.filters

@@ -14,7 +14,10 @@ from libthumbor.url import Url
 
 from thumbor.handlers.blacklist import BlacklistHandler
 from thumbor.handlers.healthcheck import HealthcheckHandler
-from thumbor.handlers.upload import ImageUploadHandler
+from thumbor.handlers.upload import (
+    ImageUploadHandler,
+    AWSImageUploadHandler
+)
 from thumbor.handlers.image_resource import ImageResourceHandler
 from thumbor.handlers.imaging import ImagingHandler
 
@@ -24,6 +27,7 @@ class ThumborServiceApp(tornado.web.Application):
     def __init__(self, context):
         self.context = context
         self.debug = getattr(self.context.server, 'debug', False)
+        self.debug = True
         super(ThumborServiceApp, self).__init__(self.get_handlers(), debug=self.debug)
 
     def get_handlers(self):
@@ -35,6 +39,10 @@ class ThumborServiceApp(tornado.web.Application):
             # Handler to upload images (POST).
             handlers.append(
                 (r'/image', ImageUploadHandler, {'context': self.context})
+            )
+
+            handlers.append(
+                (r'/aws/upload', AWSImageUploadHandler, {'context': self.context})
             )
 
             # Handler to retrieve or modify existing images  (GET, PUT, DELETE)
