@@ -11,7 +11,10 @@
 import uuid
 import mimetypes
 
-from thumbor.handlers import ImageApiHandler
+from thumbor.handlers import (
+    ImageApiHandler,
+    AWSImageHandler
+)
 from thumbor.engines import BaseEngine
 
 
@@ -67,3 +70,55 @@ class ImageUploadHandler(ImageApiHandler):
     def location(self, image_id, filename):
         base_uri = self.request.uri
         return '%s/%s/%s' % (base_uri, image_id, filename)
+
+
+##
+# Handler to upload images to a specified AWS bucket.
+# This handler support only POST method, but images can be uploaded  :
+#   - through multipart/form-data (designed for forms)
+#   - or with the image content in the request body (rest style)
+##
+class AWSImageUploadHandler(AWSImageHandler):
+
+    def post(self):
+        # Check if the image uploaded is a multipart/form-data
+        if self.multipart_form_data():
+            file_data = self.request.files['media'][0]
+            body = file_data['body']
+
+            # Retrieve filename from 'filename' field
+        else:
+            body = self.request.body
+
+            # Retrieve filename from 'Slug' header
+            filename = self.request.headers.get('Slug')
+
+        # Check if the image uploaded is valid
+        if self.validate(body):
+
+            # Use the default filename for the uploaded images
+            content_type = self.request.headers.get('Content-Type', BaseEngine.get_mimetype(body))
+            extension = mimetypes.guess_extension(content_type.split(';', 1)[0], False)
+            if extension is None:  # Content-Type is unknown, try with body
+                extension = mimetypes.guess_extension(BaseEngine.get_mimetype(body), False)
+            if extension == '.jpe':
+                extension = '.jpg'  # Hack because mimetypes return .jpe by default
+            if extension is None:  # Even body is unknown, return an empty string to be contat
+                extension = ''
+            app_id = self.request.headers['ApplicationID']
+            media_id = str(uuid.uuid4().hex)
+            filename = media_id + extension
+
+            # Build image id based on a random uuid (32 characters)
+            self.write_file(app_id, media_id, filename, body)
+            self.set_status(201)
+            self.set_header('Location', self.location(app_id, media_id, filename))
+
+    def multipart_form_data(self):
+        if 'media' not in self.request.files or not self.request.files['media']:
+            return False
+        else:
+            return True
+
+    def location(self, app_id, media_id, filename):
+        return '%s/%s/%s' % (app_id, media_id, filename)

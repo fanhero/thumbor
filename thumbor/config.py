@@ -114,6 +114,10 @@ Config.define(
     'The result storage thumbor should use to store generated images. This must be the full name of a python ' +
     'module (python must be able to import it)', 'Extensibility')
 Config.define(
+    'VARIABLE_STORAGE', None,
+    'The result storage thumbor should use to store upload images. This must be the full name of a python ' +
+    'module (python must be able to import it)', 'Extensibility')
+Config.define(
     'ENGINE', 'thumbor.engines.pil',
     'The imaging engine thumbor should use to perform image operations. This must be the full name of a ' +
     'python module (python must be able to import it)', 'Extensibility')

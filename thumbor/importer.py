@@ -32,6 +32,7 @@ class Importer:
         self.url_signer = None
         self.upload_photo_storage = None
         self.storage = None
+        self.variable_storage = None
         self.metrics = None
         self.result_storage = None
         self.detectors = []
@@ -63,6 +64,9 @@ class Importer:
 
         if self.config.UPLOAD_PHOTO_STORAGE:
             self.import_item('UPLOAD_PHOTO_STORAGE', 'Storage')
+
+        if self.config.VARIABLE_STORAGE:
+            self.import_item('VARIABLE_STORAGE', 'Storage')
 
         if self.config.USE_CUSTOM_ERROR_HANDLING:
             self.import_item('ERROR_HANDLER_MODULE', 'ErrorHandler')
