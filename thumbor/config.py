@@ -206,6 +206,7 @@ Config.define(
 # PHOTO UPLOAD OPTIONS
 Config.define('UPLOAD_MAX_SIZE', 0, "Max size in Kb for images uploaded to thumbor", 'Upload')
 Config.define('UPLOAD_ENABLED', False, 'Indicates whether thumbor should enable File uploads', 'Upload')
+Config.define('VARIABLE_UPLOAD_ENABLED', False, 'Indicates whether thumbor should enable File uploads to AWS', 'Upload')
 Config.define(
     'UPLOAD_PHOTO_STORAGE', 'thumbor.storages.file_storage',
     'The type of storage to store uploaded images with', 'Upload')

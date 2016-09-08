@@ -90,9 +90,6 @@ class AWSImageUploadHandler(AWSImageHandler):
         else:
             body = self.request.body
 
-            # Retrieve filename from 'Slug' header
-            filename = self.request.headers.get('Slug')
-
         # Check if the image uploaded is valid
         if self.validate(body):
 
@@ -108,9 +105,10 @@ class AWSImageUploadHandler(AWSImageHandler):
             app_id = self.request.headers['ApplicationID']
             media_id = str(uuid.uuid4().hex)
             filename = media_id + extension
+            file_key = '/'.join([media_id, filename])
 
             # Build image id based on a random uuid (32 characters)
-            self.write_file(app_id, media_id, filename, body)
+            self.write_file(file_key, body)
             self.set_status(201)
             self.set_header('Location', self.location(app_id, media_id, filename))
 
