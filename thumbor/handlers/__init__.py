@@ -675,7 +675,6 @@ class ImageApiHandler(ContextHandler):
         storage.put(id, body)
 
 
-
 class AWSImageHandler(ContextHandler):
 
     def validate(self, body):
@@ -690,9 +689,17 @@ class AWSImageHandler(ContextHandler):
 
         # Check for appropiate headers
         try:
-            app_id = self.request.headers['ApplicationID']
+            self.bucket = self.request.headers['ApplicationID']
         except KeyError:
             self._error(400, 'Most provide an application id')
+            return False
+
+        # Attempt to initialize a new Storage class with the given bucket
+
+        try:
+            storage = self.context.modules.variable_storage
+            storage.set_bucket(self.bucket)
+        except:
             return False
 
         # Check if image is valid
@@ -718,8 +725,6 @@ class AWSImageHandler(ContextHandler):
             return False
         return True
 
-    def write_file(self, app_id, media_id, filename, body):
-        file_key = '/'.join([media_id, filename])
-        print('FILE KEY: ', file_key)
+    def write_file(self, path, body):
         storage = self.context.modules.variable_storage
-        storage.put(file_key, body, app_id)
+        storage.put(path, body)

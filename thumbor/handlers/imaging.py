@@ -26,11 +26,9 @@ class ImagingHandler(ContextHandler):
 
     @gen.coroutine  # NOQA
     def check_image(self, kw):
-        print('-------------------------', kw['image'][:self.context.config.MAX_ID_LENGTH])
         if self.context.config.MAX_ID_LENGTH > 0:
             # Check if an image with an uuid exists in storage
             exists = yield gen.maybe_future(self.context.modules.storage.exists(kw['image'][:self.context.config.MAX_ID_LENGTH]))
-            print('EXISTS: ', exists)
             if exists:
                 kw['image'] = kw['image'][:self.context.config.MAX_ID_LENGTH]
 

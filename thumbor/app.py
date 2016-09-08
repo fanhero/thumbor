@@ -41,15 +41,18 @@ class ThumborServiceApp(tornado.web.Application):
                 (r'/image', ImageUploadHandler, {'context': self.context})
             )
 
-            handlers.append(
-                (r'/aws/upload', AWSImageUploadHandler, {'context': self.context})
-            )
-
             # Handler to retrieve or modify existing images  (GET, PUT, DELETE)
             handlers.append(
                 (r'/image/(.*)', ImageResourceHandler, {'context': self.context})
             )
+        if self.context.config.VARIABLE_UPLOAD_ENABLED:
+            # Handler to upload images to a specified AWS bucket
+            handlers.append(
+                (r'/aws/upload', AWSImageUploadHandler, {'context': self.context})
+            )
 
+        else:
+            assert False
         if self.context.config.USE_BLACKLIST:
             handlers.append(
                 (r'/blacklist', BlacklistHandler, {'context': self.context})
