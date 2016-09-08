@@ -13,6 +13,8 @@ import functools
 import datetime
 import pytz
 import traceback
+import botocore.session
+from  botocore.client import ClientError
 
 import tornado.web
 import tornado.gen as gen
@@ -638,7 +640,7 @@ class ContextHandler(BaseHandler):
 ##
 class ImageApiHandler(ContextHandler):
 
-    def validate(self, body):
+    def validate(self, body, headers=None):
         conf = self.context.config
         mime = BaseEngine.get_mimetype(body)
 
@@ -646,6 +648,34 @@ class ImageApiHandler(ContextHandler):
             engine = self.context.modules.gif_engine
         else:
             engine = self.context.modules.engine
+
+        if conf.TC_AWS_VARIABLE_BUCKET:
+            bucket = None
+            media_id = None
+            try:
+                bucket = headers['Bucket']
+            except KeyError:
+                print('No bucket')
+                self._error(400, 'Must provide a Bucket for variable storage')
+                return False
+            try:
+                media_id = headers['MediaID']
+            except KeyError:
+                print('No MediaID')
+                self._error(400, 'Must provide a MediaID for variable storage')
+                return False
+            # Check if bucket is valid
+            if bucket is not None:
+                session = botocore.session.get_session()
+                client = session.create_client('s3', region_name='us-east-1')
+                try:
+                    print(client.head_bucket(Bucket=bucket))
+                except ClientError as e:
+                    self._error(401, 'Unable to reach bucket: %s' % bucket)
+                    return False
+            else:
+                self._error(400, 'Bucket must be provided when using a variable bucket')
+                return False
 
         # Check if image is valid
         try:
@@ -670,8 +700,10 @@ class ImageApiHandler(ContextHandler):
             return False
         return True
 
-    def write_file(self, id, body):
+    def write_file(self, id, body, bucket=None):
         storage = self.context.modules.upload_photo_storage
+        if bucket is not None:
+            storage.set_bucket(bucket)
         storage.put(id, body)
 
 
