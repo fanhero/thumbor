@@ -27,6 +27,9 @@ You can see thumbor in action at http://thumborize.me/
 
 Our custom AWS plugin relies on authentication handled by botocore, see [Boto3 documentation](https://boto3.readthedocs.org/en/latest/guide/quickstart.html#configuration)
 
+If running on heroku, simply add credentials
+`heroku config:set AWS_ACCESS_KEY_ID=xxx AWS_SECRET_ACCESS_KEY=yyy`
+
 python 2.7.x is required to run Thumbor
 
 ### Development
