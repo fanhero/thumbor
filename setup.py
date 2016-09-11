@@ -103,7 +103,7 @@ http://<thumbor-server>/300x200/smart/s.glbimg.com/et/bb/f/original/2011/03/24/V
             "statsd>=3.0.1",
             "libthumbor>=1.3.2",
             "futures",
-            "argparse",
+            "argparse==1.2.1",
             "pytz",
             "python-dateutil",
             "tornado-botocore",
