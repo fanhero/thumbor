@@ -106,7 +106,8 @@ http://<thumbor-server>/300x200/smart/s.glbimg.com/et/bb/f/original/2011/03/24/V
             "argparse",
             "pytz",
             "python-dateutil",
-            "tornado-botocore"
+            "tornado-botocore",
+            "redis"
         ],
 
         extras_require={
