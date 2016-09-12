@@ -108,7 +108,8 @@ http://<thumbor-server>/300x200/smart/s.glbimg.com/et/bb/f/original/2011/03/24/V
             "python-dateutil",
             "tornado-botocore",
             "redis==2.4.12",
-            "remotecv"
+            "remotecv",
+	    "opencv_engine"
         ],
 
         extras_require={
