@@ -30,6 +30,8 @@ Our custom AWS plugin relies on authentication handled by botocore, see [Boto3 d
 If running on heroku, simply add credentials
 `heroku config:set AWS_ACCESS_KEY_ID=xxx AWS_SECRET_ACCESS_KEY=yyy`
 
+openCV (FHopenCV 3.0.1)
+
 python 2.7.x is required to run Thumbor
 
 ### Development
