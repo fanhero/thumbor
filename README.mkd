@@ -29,6 +29,8 @@ Our custom AWS plugin relies on authentication handled by botocore, see [Boto3 d
 
 python 2.7.x is required to run Thumbor
 
+a compile version of openCV with pyhton handlers
+
 ### Development
 
 If developing it is suggested that thumbor be run in a virtualenv to manage the pip dependencies
