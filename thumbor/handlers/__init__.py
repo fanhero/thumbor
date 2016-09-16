@@ -94,9 +94,7 @@ class BaseHandler(tornado.web.RequestHandler):
         should_store = self.context.config.RESULT_STORAGE_STORES_UNSAFE or not self.context.request.unsafe
         if self.context.modules.result_storage and should_store:
             start = datetime.datetime.now()
-
             result = yield gen.maybe_future(self.context.modules.result_storage.get())
-
             finish = datetime.datetime.now()
 
             self.context.metrics.timing('result_storage.incoming_time', (finish - start).total_seconds() * 1000)
@@ -308,7 +306,6 @@ class BaseHandler(tornado.web.RequestHandler):
             results = self.optimize(context, image_extension, results)
             # An optimizer might have modified the image format.
             content_type = BaseEngine.get_mimetype(results)
-
         return results, content_type
 
     @gen.coroutine
@@ -394,11 +391,9 @@ class BaseHandler(tornado.web.RequestHandler):
     def _store_results(self, context, results):
         if not context.modules.result_storage or context.request.prevent_result_storage:
             return
-
         @gen.coroutine
         def save_to_result_storage():
             start = datetime.datetime.now()
-
             yield gen.maybe_future(context.modules.result_storage.put(results))
 
             finish = datetime.datetime.now()
