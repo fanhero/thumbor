@@ -28,7 +28,7 @@ class Storage(VariableAwsStorage, BaseStorage):
         Initializes a new instance of VariableAwsStorage with a given bucket
         :param bucket: AWS bucket to store data at
         """
-        VariableAwsStorage.__init__(self, bucket, self.context, 'TC_AWS_VARIABLE_STORAGE')
+        VariableAwsStorage.__init__(self, bucket, self.context, 'VARIABLE_STORAGE')
 
     @return_future
     def put(self, path, bytes, callback=None):

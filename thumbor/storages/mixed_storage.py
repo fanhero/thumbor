@@ -52,6 +52,7 @@ class Storage(BaseStorage):
 
     def put(self, path, bytes):
         self._init_file_storage()
+        print('---------------------------')
         self.file_storage.put(path, bytes)
 
     def put_detector_data(self, path, data):
@@ -82,7 +83,10 @@ class Storage(BaseStorage):
 
     @gen.coroutine
     def exists(self, path):
+        print(path)
         self._init_file_storage()
+        if self.context.config.VARIABLE_RESULTS_ENABLED:
+            self.file_storage.set_bucket(path.split('/')[0])
         result = yield gen.maybe_future(self.file_storage.exists(path))
         raise gen.Return(result)
 
