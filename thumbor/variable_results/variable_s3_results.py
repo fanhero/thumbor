@@ -39,7 +39,8 @@ class Storage(VariableAwsStorage, BaseStorage):
         :param callable callback: Method called once done
         :rtype: string
         """
-        path = self._normalize_path(self.context.request.url)
+        path = self._normalize_path(self.context.request.image_url)
+        bucket, path = self._get_bucket_and_key(path)
 
         if callback is None:
             def callback(key):
@@ -71,7 +72,7 @@ class Storage(VariableAwsStorage, BaseStorage):
 
                 callback(result)
         bucket, key = self._get_bucket_and_key(path)
-        print(key)
+        print('GETTING KEY: ', key)
         self._set_bucket(bucket)
         super(Storage, self).get(key, callback=return_result)
 
@@ -97,6 +98,8 @@ class Storage(VariableAwsStorage, BaseStorage):
         req = self.context.request
         shape = str(req.width) + 'x' + str(req.height) + '_'
         bucket = self._get_bucket(url)
-        key = shape + '/'.join(url.lstrip('/').split('/')[1:])
+        parent = url.split('/')[-2]
+        filename = shape + url.split('/')[-1]
+        key = '/'.join([parent, filename])
 
         return bucket, key
