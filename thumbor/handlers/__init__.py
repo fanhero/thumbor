@@ -72,7 +72,7 @@ class BaseHandler(tornado.web.RequestHandler):
             ext = self.context.request.engine.extension
             self.context.metrics.incr('response.format{0}'.format(ext))
             self.context.metrics.timing('response.time{0}'.format(ext), total_time)
-            if self.context.request.engine.image:
+            if self.context.request.engine.image.any():
                 self.context.metrics.incr(
                     'response.bytes{0}'.format(ext),
                     len(self.context.request.engine.image.tobytes())
