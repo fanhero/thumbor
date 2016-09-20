@@ -52,7 +52,6 @@ class Storage(BaseStorage):
 
     def put(self, path, bytes):
         self._init_file_storage()
-        print('---------------------------')
         self.file_storage.put(path, bytes)
 
     def put_detector_data(self, path, data):
