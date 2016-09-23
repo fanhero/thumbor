@@ -13,7 +13,7 @@ matrix:
     - python: '3.5.1'
     - python: pypy
 env:
-  - INTEGRATION_TEST=1
+  - INTEGRATION_TEST=0
   - UNIT_TEST=0
 addons:
   apt:
@@ -50,8 +50,5 @@ before_script:
   - make redis
 script:
   make compile_ext ci_test
-notifications:
-  slack:
-    secure: Sf6TJa/H3mq+RGqpLwKNRpNw0YQKX3+5bt5e37CSs8rOC+SoFHVNr29QhbXFPwmqQuy9qKb0t5rzChDIIvXErywU2lEw3/JlQtCt1xLsoUfpBF8g8ldoy6ESO2j9Jj6Y/M/4RN2zN3AAd5gfXPrdLHa++eiRaiAXXU+9ZvtUxuc=
 after_success:
   coveralls
