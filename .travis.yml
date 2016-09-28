@@ -42,7 +42,7 @@ install:
 - pip install --upgrade pip
 - make setup
 script:
-  make compile_ext ci_test
+  make test
 env:
   matrix:
     - INTEGRATION_TEST=1
