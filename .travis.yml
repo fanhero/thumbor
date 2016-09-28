@@ -1,20 +1,19 @@
 language: python
 python:
-  - 2.7_with_system_site_packages
-  - '3.5.1'
-  - pypy
+- 2.7_with_system_site_packages
+- 3.5.1
+- pypy
 cache:
   directories:
-    - $HOME/.cache/pip
+  - $HOME/.cache/pip
 sudo: false
 matrix:
   fast_finish: true
   allow_failures:
-    - python: '3.5.1'
-    - python: pypy
-env:
-  - INTEGRATION_TEST=0
-  - UNIT_TEST=0
+  - python: 3.5.1
+  - python: pypy
+before_install:
+  - echo $pass | gpg --passphrase-fd 0 thumbor.conf.gpg
 addons:
   apt:
     packages:
@@ -41,14 +40,6 @@ addons:
     - liblapack-dev
     - python-pyexiv2
 install:
-  - pip install -U pip
-  - pip install --upgrade pip
-  - make setup
-  - pip install coveralls
-  - pip install cairosvg
-before_script:
-  - make redis
-script:
-  make compile_ext
-after_success:
-  coveralls
+- pip install -U pip
+- pip install --upgrade pip
+- make setup
