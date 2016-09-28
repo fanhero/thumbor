@@ -13,7 +13,7 @@ matrix:
   - python: 3.5.1
   - python: pypy
 before_install:
-- echo $pass | gpg --passphrase-fd 0 thumbor.conf.gpg
+- echo $pass | gpg --passphrase-fd 0 thumbor/thumbor.conf.gpg
 addons:
   apt:
     packages:
