@@ -51,8 +51,6 @@ class ThumborServiceApp(tornado.web.Application):
                 (r'/aws/upload', AWSImageUploadHandler, {'context': self.context})
             )
 
-        else:
-            assert False
         if self.context.config.USE_BLACKLIST:
             handlers.append(
                 (r'/blacklist', BlacklistHandler, {'context': self.context})
