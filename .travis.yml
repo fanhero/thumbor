@@ -43,8 +43,6 @@ install:
 - pip install -U pip
 - pip install --upgrade pip
 - make setup test
-before_script:
-- make redis
 script:
   make compile_ext
 env:
