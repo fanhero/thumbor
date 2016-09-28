@@ -2,7 +2,7 @@ run: compile_ext
 	@thumbor -l debug -d
 
 setup:
-	@pip install -e .[tests]
+	@pip install -r requirements.txt
 
 compile_ext:
 	@python setup.py build_ext -i
