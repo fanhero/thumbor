@@ -7,7 +7,7 @@ setup:
 compile_ext:
 	@python setup.py build_ext -i
 
-test: compile_ext redis
+test: compile_ext
 	@nosetests -sv integration_tests/
 
 ci_test: compile_ext
