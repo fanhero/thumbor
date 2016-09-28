@@ -42,9 +42,10 @@ addons:
 install:
 - pip install -U pip
 - pip install --upgrade pip
-- make setup test
+- make setup
 script:
-  make compile_ext
+  make compile_ext ci_test
 env:
+  - INTEGRATION_TEST=1
   global:
     secure: P3gmJGXPOVdqMDc6iHtBdwoIO7RZ2FNX/Y7AZxHKnf+npgYM3U2+WX/Rjo8bZzP6UMkhHsFOH/MTvUgwBsIx14D1pG80f4/a1iTFcnrj3QTNM5grKMlPmLw0Ft/gdmPhcoFoyAkSIZS1tufs8HaAuXIIRR+cVl+o/6A3Sf2eCzr9bO++tv+FGlF0VId/7PqklDb1IWLekIaA96trBVNbgajl2OyNHsHn3niFKsVDeGvoBoWazk/rvZWXHXrEDTwxDWIu16NNPUp5dara+7RJKGmpDZYorZBA1bzYPWjHeeJQnKl8fluaU2VbuqyzrGCeRBxOK1lr65rtQ1rIrQsXF1EjEeMFJ4RZ/oliINmtN+cFWeVnuqP4MSEcV7jnJjTf2wn51wO+iB5JPRFpUiQ46oAl6jHLnm12AdSLAjld7+Y1nFYELtNx3k0aRDY8erKvN/kOuNKt5yQQOz1D/lY82OqKmaTE6Cy7oFj3NvT7si8620j1G6iVBEb4NvYT0B6dpoyoJxgzkGIFlmsjsgsqht28xjG3Ax5aW8QxyCcdGfZNihQSrdLnpverjdJ9wiUd+WFEo2F11jr1KYzzscrejEhxSqpKYWC2u5i/F7hMoTm6+Nx34P0VRK08p8jTJaVGuYq1is1f2SAhaJY0AialdIM+sHOkqp+UI3hbrDNPCe8=
