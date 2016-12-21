@@ -2,21 +2,13 @@ run: compile_ext
 	@thumbor -l debug -d
 
 setup:
-	@pip install -e .[tests]
-	@echo
-	@echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-	@echo ">>>>>>>>>>>>>>> MAKE SURE GIFSICLE IS INSTALLED IF RUNNING TESTS <<<<<<<<<<<<<<"
-	@echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-	@echo
+	@pip install -r requirements.txt
 
 compile_ext:
 	@python setup.py build_ext -i
 
-test: compile_ext redis
-	@$(MAKE) unit coverage
+test: compile_ext
 	@nosetests -sv integration_tests/
-	@$(MAKE) static
-	$(MAKE) kill_redis
 
 ci_test: compile_ext
 	@echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
