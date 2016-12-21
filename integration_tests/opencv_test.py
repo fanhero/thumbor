@@ -1,8 +1,8 @@
 from . import EngineCase
 
 
-class PILTest(EngineCase):
-    engine = 'thumbor.engines.pil'
+class OpenCVTest(EngineCase):
+    engine = 'opencv_engine'
 
     def test_single_params(self):
         self.exec_single_params()
