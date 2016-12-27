@@ -360,6 +360,10 @@ class BaseHandler(tornado.web.RequestHandler):
         )
 
     def _write_results_to_client(self, context, results, content_type):
+        if self.context.config.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER:
+            ac_header = self.context.config.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER
+            self.set_header('Access-Control-Allow-Origin', ac_header)
+
         max_age = context.config.MAX_AGE
 
         if context.request.max_age is not None:
