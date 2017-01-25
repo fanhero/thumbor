@@ -35,13 +35,13 @@ class ThumborServiceApp(tornado.web.Application):
         handlers = [
             (r'/healthcheck', HealthcheckHandler)
         ]
-
-        hft = self.context.config.HIREFIRE_TOKEN
-        if hft:
-            handlers.append(
-                (r'/hirefire/{hft}/info'.format(hft=hft), QueueSizeHandler, {'context': self.context})
-            )
-        else:
+        try:
+            hft = self.context.config.HIREFIRE_TOKEN
+            if hft:
+                handlers.append(
+                    (r'/hirefire/{hft}/info'.format(hft=hft), QueueSizeHandler, {'context': self.context})
+                )
+        except AttributeError:
             logger.warn('No HIREFIRE Token set!')
 
         if self.context.config.UPLOAD_ENABLED:
