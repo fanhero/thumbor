@@ -1,2 +1,2 @@
 -e git+https://github.com/arthien/opencv-engine.git#egg=opencv-engine
--e .
+-e .\[tests\] 
