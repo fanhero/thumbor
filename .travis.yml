@@ -28,7 +28,6 @@ addons:
     - libwebp-dev
     - webp
     - gifsicle
-    - python-numpy
     - python-scipy
     - libcairo2-dev
     - gfortran
