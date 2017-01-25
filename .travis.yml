@@ -1,6 +1,6 @@
 language: python
 python:
-- 2.7_with_system_site_packages
+- 2.7
 cache:
   directories:
   - $HOME/.cache/pip
@@ -11,35 +11,15 @@ matrix:
   - python: 3.5.1
   - python: pypy
 before_install:
+- pip install -U pip
+- pip install --upgrade pip
+- pip install opencv-python
 - echo $pass | gpg --passphrase-fd 0 thumbor/thumbor.conf.gpg
 addons:
   apt:
     packages:
-    - libcurl4-openssl-dev
-    - python-numpy
-    - python-opencv
-    - libimage-exiftool-perl
-    - libopencv-dev
-    - libjpeg-progs
-    - libjpeg-dev
-    - libpng-dev
-    - libx264-dev
-    - libass-dev
-    - libvpx1
-    - libvpx-dev
-    - libwebp-dev
-    - webp
     - gifsicle
-    - python-numpy
-    - python-scipy
-    - libcairo2-dev
-    - gfortran
-    - libopenblas-dev
-    - liblapack-dev
-    - python-pyexiv2
 install:
-- pip install -U pip
-- pip install --upgrade pip
 - make setup
 script:
   make test

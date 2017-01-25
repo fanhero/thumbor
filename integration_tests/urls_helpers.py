@@ -19,6 +19,10 @@ metas = [
 
 trims = [
     'trim',
+    'trim:top-left',
+    'trim:bottom-right',
+    'trim:top-left:10',
+    'trim:bottom-right:20',
 ]
 
 crops = [
@@ -55,6 +59,7 @@ valigns = [
 ]
 
 smarts = [
+    'smart',
 ]
 
 filters = [
@@ -70,11 +75,24 @@ filters = [
     'filters:round_corner(20,255,255,100)',
     'filters:sharpen(6,2.5,false)',
     'filters:sharpen(6,2.5,true)',
+    'filters:strip_icc()',
+    'filters:watermark(rgba-interlaced.png,10,10,50)',
+    'filters:watermark(rgba-interlaced.png,center,center,50)',
+    'filters:watermark(rgba-interlaced.png,repeat,repeat,50)',
+    'filters:frame(rgba.png)',
+    'filters:fill(ff0000)',
+    'filters:fill(auto)',
+    'filters:fill(ff0000,true)',
+    'filters:fill(transparent)',
+    'filters:fill(transparent,true)',
     'filters:blur(2)',
     'filters:extract_focal()',
     'filters:focal()',
     'filters:focal(0x0:1x1)',
     'filters:no_upscale()',
+    'filters:gifv()',
+    'filters:gifv(webm)',
+    'filters:gifv(mp4)',
     'filters:max_age(600)',
 
     # one big filter 4-line string
@@ -92,7 +110,12 @@ original_images_base = [
     '16bit.png',
 ]
 
-original_images_gif_webp = []
+original_images_gif_webp = [
+    'gradient.webp',
+    'gradient.gif',
+    'animated.gif',
+]
+
 
 class UrlsTester(object):
 
