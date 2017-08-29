@@ -10,8 +10,7 @@
 import tornado.web
 import tornado.ioloop
 
-from libthumbor.url import Url
-
+from thumbor.url import Url
 from thumbor.handlers.blacklist import BlacklistHandler
 from thumbor.handlers.healthcheck import HealthcheckHandler, QueueSizeHandler
 from thumbor.handlers.upload import (
