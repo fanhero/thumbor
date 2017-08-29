@@ -1,63 +1,30 @@
 language: python
 python:
-  - 2.7_with_system_site_packages
-  - '3.5.1'
-  - pypy
+- 2.7
 cache:
   directories:
-    - $HOME/.cache/pip
+  - $HOME/.cache/pip
 sudo: false
 matrix:
   fast_finish: true
   allow_failures:
-    - python: '3.5.1'
-    - python: pypy
-env:
-  - INTEGRATION_TEST=1
-  - UNIT_TEST=1
+  - python: 3.5.1
+  - python: pypy
+before_install:
+- pip install -U pip
+- pip install --upgrade pip
+- pip install opencv-python
+- echo $pass | gpg --passphrase-fd 0 thumbor/thumbor.conf.gpg
 addons:
   apt:
     packages:
-    - libcurl4-openssl-dev
-    - python-numpy
-    - python-opencv
-    - libimage-exiftool-perl
-    - libopencv-dev
-    - libjpeg-progs
-    - libjpeg-dev
-    - libpng-dev
-    - libx264-dev
-    - libass-dev
-    - libvpx1
-    - libvpx-dev
-    - libwebp-dev
-    - webp
     - gifsicle
-    - python-numpy
-    - python-scipy
-    - libcairo2-dev
-    - gfortran
-    - libopenblas-dev
-    - liblapack-dev
-    - python-pyexiv2
 install:
-  - pip install -U pip
-  - wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
-    -O /tmp/ffmpeg-release.tar.xz
-  - mkdir /tmp/ffmpeg-release
-  - tar -C /tmp/ffmpeg-release --strip 1 -xvf /tmp/ffmpeg-release.tar.xz
-  - export PATH=/tmp/ffmpeg-release:$PATH
-  - ffmpeg -version
-  - pip install --upgrade pip
-  - make setup
-  - pip install coveralls
-  - pip install cairosvg
-before_script:
-  - make redis
+- make setup
 script:
-  make compile_ext ci_test
-notifications:
-  slack:
-    secure: Sf6TJa/H3mq+RGqpLwKNRpNw0YQKX3+5bt5e37CSs8rOC+SoFHVNr29QhbXFPwmqQuy9qKb0t5rzChDIIvXErywU2lEw3/JlQtCt1xLsoUfpBF8g8ldoy6ESO2j9Jj6Y/M/4RN2zN3AAd5gfXPrdLHa++eiRaiAXXU+9ZvtUxuc=
-after_success:
-  coveralls
+  make test
+env:
+  matrix:
+    - INTEGRATION_TEST=1
+  global:
+    secure: P3gmJGXPOVdqMDc6iHtBdwoIO7RZ2FNX/Y7AZxHKnf+npgYM3U2+WX/Rjo8bZzP6UMkhHsFOH/MTvUgwBsIx14D1pG80f4/a1iTFcnrj3QTNM5grKMlPmLw0Ft/gdmPhcoFoyAkSIZS1tufs8HaAuXIIRR+cVl+o/6A3Sf2eCzr9bO++tv+FGlF0VId/7PqklDb1IWLekIaA96trBVNbgajl2OyNHsHn3niFKsVDeGvoBoWazk/rvZWXHXrEDTwxDWIu16NNPUp5dara+7RJKGmpDZYorZBA1bzYPWjHeeJQnKl8fluaU2VbuqyzrGCeRBxOK1lr65rtQ1rIrQsXF1EjEeMFJ4RZ/oliINmtN+cFWeVnuqP4MSEcV7jnJjTf2wn51wO+iB5JPRFpUiQ46oAl6jHLnm12AdSLAjld7+Y1nFYELtNx3k0aRDY8erKvN/kOuNKt5yQQOz1D/lY82OqKmaTE6Cy7oFj3NvT7si8620j1G6iVBEb4NvYT0B6dpoyoJxgzkGIFlmsjsgsqht28xjG3Ax5aW8QxyCcdGfZNihQSrdLnpverjdJ9wiUd+WFEo2F11jr1KYzzscrejEhxSqpKYWC2u5i/F7hMoTm6+Nx34P0VRK08p8jTJaVGuYq1is1f2SAhaJY0AialdIM+sHOkqp+UI3hbrDNPCe8=

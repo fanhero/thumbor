@@ -10,16 +10,16 @@
 import tornado.web
 import tornado.ioloop
 
-from libthumbor.url import Url
-
+from thumbor.url import Url
 from thumbor.handlers.blacklist import BlacklistHandler
-from thumbor.handlers.healthcheck import HealthcheckHandler
+from thumbor.handlers.healthcheck import HealthcheckHandler, QueueSizeHandler
 from thumbor.handlers.upload import (
     ImageUploadHandler,
     AWSImageUploadHandler
 )
 from thumbor.handlers.image_resource import ImageResourceHandler
 from thumbor.handlers.imaging import ImagingHandler
+from thumbor.utils import logger
 
 
 class ThumborServiceApp(tornado.web.Application):
@@ -32,8 +32,16 @@ class ThumborServiceApp(tornado.web.Application):
 
     def get_handlers(self):
         handlers = [
-            (r'/healthcheck', HealthcheckHandler),
+            (r'/healthcheck', HealthcheckHandler)
         ]
+        try:
+            hft = self.context.config.HIREFIRE_TOKEN
+            if hft:
+                handlers.append(
+                    (r'/hirefire/{hft}/info'.format(hft=hft), QueueSizeHandler, {'context': self.context})
+                )
+        except AttributeError:
+            logger.warn('No HIREFIRE Token set!')
 
         if self.context.config.UPLOAD_ENABLED:
             # Handler to upload images (POST).
@@ -51,8 +59,6 @@ class ThumborServiceApp(tornado.web.Application):
                 (r'/aws/upload', AWSImageUploadHandler, {'context': self.context})
             )
 
-        else:
-            assert False
         if self.context.config.USE_BLACKLIST:
             handlers.append(
                 (r'/blacklist', BlacklistHandler, {'context': self.context})

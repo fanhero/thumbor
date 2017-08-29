@@ -31,9 +31,6 @@ class EngineCase(AsyncHTTPTestCase):
         cfg.USE_GIFSICLE_ENGINE = True
         cfg.FFMPEG_PATH = which('ffmpeg')
         cfg.ENGINE_THREADPOOL_SIZE = 10
-        cfg.OPTIMIZERS = [
-            'thumbor.optimizers.gifv',
-        ]
         if not cfg.ENGINE:
             return None
 
@@ -57,6 +54,7 @@ class EngineCase(AsyncHTTPTestCase):
         single_dataset(self.retrieve)
 
     # def test_combined_params__with_pil(self):
-    #     if not self._app:
-    #         return True
-    #     combined_dataset(self.retrieve)
+    #
+    #    if not self._app:
+    #        return True
+    #    combined_dataset(self.retrieve)

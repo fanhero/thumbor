@@ -30,7 +30,6 @@ tests_require = [
     "yanc",
     "remotecv",
     "pyssim",
-    "cairosvg!=1.0.21",
     "preggy>=1.3.0",
 ]
 
@@ -106,7 +105,7 @@ http://<thumbor-server>/300x200/smart/s.glbimg.com/et/bb/f/original/2011/03/24/V
             "argparse==1.2.1",
             "pytz",
             "python-dateutil",
-            "tornado-botocore",
+            "tornado-botocore==1.0.2",
             "redis==2.4.12",
             "remotecv",
 	    "opencv_engine"
