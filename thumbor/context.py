@@ -9,6 +9,7 @@
 # Copyright (c) 2011 globo.com thumbor@googlegroups.com
 
 from os.path import abspath, exists
+import math
 import tornado
 from concurrent.futures import ThreadPoolExecutor, Future
 import functools
@@ -201,7 +202,7 @@ class RequestParameters:
             self.accepts_webp = 'image/webp' in request.headers.get('Accept', '')
 
     def int_or_0(self, value):
-        return 0 if value is None else int(float(value))
+        return 0 if value is None else math.ceil(float(value))
 
 
 class ContextImporter:
