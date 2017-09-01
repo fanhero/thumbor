@@ -202,7 +202,7 @@ class RequestParameters:
             self.accepts_webp = 'image/webp' in request.headers.get('Accept', '')
 
     def int_or_0(self, value):
-        return 0 if value is None else math.ceil(float(value))
+        return 0 if value is None else int(float(value))
 
 
 class ContextImporter:
