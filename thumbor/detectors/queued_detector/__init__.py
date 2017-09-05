@@ -9,7 +9,7 @@
 # Copyright (c) 2011 globo.com thumbor@googlegroups.com
 
 
-from redis import Redis, RedisError
+from redis import Redis, RedisError, from_url
 from remotecv.unique_queue import UniqueQueue
 
 from thumbor.detectors import BaseDetector
@@ -24,10 +24,13 @@ class QueuedDetector(BaseDetector):
         self.context.request.prevent_result_storage = True
         try:
             if not QueuedDetector.queue:
-                redis = Redis(host=self.context.config.REDIS_QUEUE_SERVER_HOST,
-                              port=self.context.config.REDIS_QUEUE_SERVER_PORT,
-                              db=self.context.config.REDIS_QUEUE_SERVER_DB,
-                              password=self.context.config.REDIS_QUEUE_SERVER_PASSWORD)
+                if self.context.config.REDIS_QUEUE_SERVER_URL:
+                    redis = from_url(self.context.config.REDIS_QUEUE_SERVER_URL)
+                else:
+                    redis = Redis(host=self.context.config.REDIS_QUEUE_SERVER_HOST,
+                                  port=self.context.config.REDIS_QUEUE_SERVER_PORT,
+                                  db=self.context.config.REDIS_QUEUE_SERVER_DB,
+                                  password=self.context.config.REDIS_QUEUE_SERVER_PASSWORD)
                 QueuedDetector.queue = UniqueQueue(server=redis)
 
             QueuedDetector.queue.enqueue_unique_from_string(
