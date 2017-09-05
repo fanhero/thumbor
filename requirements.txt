@@ -1,2 +1,3 @@
 -e git+https://github.com/fanhero/opencv-engine.git#egg=opencv-engine
+-e git+https://github.com/fanhero/remotecv.git#egg=remotecv
 -e .\[tests\] 

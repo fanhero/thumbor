@@ -17,7 +17,7 @@ import logging
 
 
 tests_require = [
-    "redis>=2.4.9,<3.0.0",
+    "redis>=2.10.6,<3.0.0",
     "coverage",
     "mock>=1.0.1,<3.0.0",
     "raven",
@@ -106,9 +106,9 @@ http://<thumbor-server>/300x200/smart/s.glbimg.com/et/bb/f/original/2011/03/24/V
             "pytz",
             "python-dateutil",
             "tornado-botocore==1.0.2",
-            "redis==2.4.12",
+            "redis==2.10.6",
             "remotecv",
-	    "opencv_engine"
+	        "opencv_engine"
         ],
 
         extras_require={

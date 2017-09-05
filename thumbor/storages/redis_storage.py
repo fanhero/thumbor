@@ -2,7 +2,7 @@
 
 import json
 from datetime import datetime, timedelta
-from redis import Redis, RedisError
+from redis import Redis, RedisError, from_url
 from thumbor.utils import on_exception
 from tornado.concurrent import return_future
 from thumbor.storages import BaseStorage
@@ -41,12 +41,15 @@ class Storage(BaseStorage):
         if self.shared_client and Storage.storage:
             return Storage.storage
 
-        storage = Redis(
-            port=self.context.config.REDIS_STORAGE_SERVER_PORT,
-            host=self.context.config.REDIS_STORAGE_SERVER_HOST,
-            db=self.context.config.REDIS_STORAGE_SERVER_DB,
-            password=self.context.config.REDIS_STORAGE_SERVER_PASSWORD
-        )
+        if self.context.config.REDIS_STORAGE_SERVER_URL:
+            storage = from_url(self.context.config.REDIS_STORAGE_SERVER_URL)
+        else:
+            storage = Redis(
+                port=self.context.config.REDIS_STORAGE_SERVER_PORT,
+                host=self.context.config.REDIS_STORAGE_SERVER_HOST,
+                db=self.context.config.REDIS_STORAGE_SERVER_DB,
+                password=self.context.config.REDIS_STORAGE_SERVER_PASSWORD
+            )
 
         if self.shared_client:
             Storage.storage = storage

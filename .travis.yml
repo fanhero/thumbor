@@ -14,17 +14,20 @@ before_install:
 - pip install -U pip
 - pip install --upgrade pip
 - pip install opencv-python
-- echo $pass | gpg --passphrase-fd 0 thumbor/thumbor.conf.gpg
 addons:
   apt:
     packages:
     - gifsicle
 install:
 - make setup
-script:
-  make test
+script: make test
 env:
   matrix:
-    - INTEGRATION_TEST=1
+  - INTEGRATION_TEST=1
   global:
     secure: P3gmJGXPOVdqMDc6iHtBdwoIO7RZ2FNX/Y7AZxHKnf+npgYM3U2+WX/Rjo8bZzP6UMkhHsFOH/MTvUgwBsIx14D1pG80f4/a1iTFcnrj3QTNM5grKMlPmLw0Ft/gdmPhcoFoyAkSIZS1tufs8HaAuXIIRR+cVl+o/6A3Sf2eCzr9bO++tv+FGlF0VId/7PqklDb1IWLekIaA96trBVNbgajl2OyNHsHn3niFKsVDeGvoBoWazk/rvZWXHXrEDTwxDWIu16NNPUp5dara+7RJKGmpDZYorZBA1bzYPWjHeeJQnKl8fluaU2VbuqyzrGCeRBxOK1lr65rtQ1rIrQsXF1EjEeMFJ4RZ/oliINmtN+cFWeVnuqP4MSEcV7jnJjTf2wn51wO+iB5JPRFpUiQ46oAl6jHLnm12AdSLAjld7+Y1nFYELtNx3k0aRDY8erKvN/kOuNKt5yQQOz1D/lY82OqKmaTE6Cy7oFj3NvT7si8620j1G6iVBEb4NvYT0B6dpoyoJxgzkGIFlmsjsgsqht28xjG3Ax5aW8QxyCcdGfZNihQSrdLnpverjdJ9wiUd+WFEo2F11jr1KYzzscrejEhxSqpKYWC2u5i/F7hMoTm6+Nx34P0VRK08p8jTJaVGuYq1is1f2SAhaJY0AialdIM+sHOkqp+UI3hbrDNPCe8=
+deploy:
+  provider: heroku
+  app: fanhero-image-processer-stg
+  api_key:
+    secure: JaWJTUKftds9vJs91tNaPa7887ykuCPG6xm5ptB+/qEZmuLcBaeVVsr9ECVwiWsMUmntM1CJkeDB0/CMGaAWp9Cc/VsY/X5xw80j+MA9Jjts8K9Piw/BzLF/QgJOvfYa7zc420gOTek6nuO4IFMpntSFh33iregceXugE9WVJUzy3hsNBWQfYGL8X1kPWkvKH3/Ern5Ew4RxV4c+v+ueNSazm+3bq7ZQpOiCROSgB8djRRsClOP0MjbnbUq9fzYPbKXdz9/onKQfHeKRYNgc6jw71pG2nXIKVTpVx3NbAtRPGK/AQndpfEtuBz1hT7UL3wLiHElBE/QqsbjUnqbrK5Bn/KeugqrEkNa3a8W86QDZPK7iEoF4Xe6c5DZHU5515FpKAcBDk9Cs0mS+9A0zQuKMO2qE0zC4j16WgNo5D+AXW54zENK5KN7tuu/4tbvUYR0uf3kJ1RGUxWaF25hZnCjoLf6ihUfaQRFmnIGLdz/mmnXYrmqvmJlYkpcY05TUinLEz7lJ4mbYqjAXZTts0cIImsjqcLYUiqwNQARn67IpYpmlu1BpmdxU+/vYHtRqlR8gr3Sfk7D/EKYigLijVuYEunTa4bE81P5PdXykJTHKOonnAxIDCw+twBWE2hVEvBpdHOjE+pq3crQ8HFBQtWcWLLBqtD9teg4CZ0ZzHMs=
